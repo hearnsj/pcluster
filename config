@@ -1,0 +1,55 @@
+# AWS ParallelCluster config
+[aws]
+aws_region_name = eu-west-2
+
+[cluster default]
+key_name = pcluster
+vpc_settings = pcluster
+
+# EC2 instance type for master node
+# (defaults to t2.micro)
+master_instance_type = t2.micro
+# EC2 instance type for compute nodes
+# (defaults to t2.micro , 'optimal' when scheduler is awsbatch)
+compute_instance_type = t2.micro
+# Initial number of EC2 instances to launch as compute nodes in the cluster for schedulers other than awsbatch.
+# (defaults to 2)
+initial_queue_size = 2
+# Maximum number of EC2 instances that can be launched in the cluster for schedulers other than awsbatch.
+# (defaults to 10)
+max_queue_size = 10
+# Boolean flag to set autoscaling group to maintain initial size and scale back for schedulers other than awsbatch.
+# (defaults to false)
+maintain_initial_size = true
+# Minimum number of vcpus that will be running when scheduler is awsbatch.
+# defaults to 0
+#min_vcpus = 0
+# Initial number of vcpus to launch when scheduler is awsbatch.
+# defaults to 4
+#desired_vcpus = 4
+# Maximum number of vcpus that can be launched when scheduler is awsbatch.
+#max_vcpus = 20
+
+ Cluster scheduler
+# (defaults to sge)
+scheduler = slurm
+# Type of cluster to launch i.e. ondemand or spot
+# (defaults to ondemand)
+cluster_type = ondemand
+
+
+
+
+
+[vpc pcluster]
+vpc_id = vpc-f1aa3e99
+master_subnet_id = subnet-9aac32f3
+
+[global]
+cluster_template = default
+update_check = true
+sanity_check = true
+
+[aliases]
+ssh = ssh {CFN_USER}@{MASTER_IP} {ARGS}
+
